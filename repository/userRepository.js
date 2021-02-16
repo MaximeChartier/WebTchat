@@ -67,7 +67,7 @@ getMaxId = ()=>{
     return bigger;
 }
 
-isUniqueEmail = (email)=>{
+isUsedEmail = (email)=>{
     return USERS.filter(u => u.email == email).length > 0
 }
 
@@ -77,6 +77,6 @@ module.exports = {
     delete_,
     tools:{
         getMaxId,
-        isUniqueEmail
+        isUsedEmail
     }
 }

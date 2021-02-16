@@ -58,6 +58,14 @@ post_ = (req, res, next)=>{
         res.status(400)
         return next()
     }
+    if(userRepository.tools.isUsedEmail(email)){
+        res.status(400)
+        return next()
+    }
+    if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
+        res.status(400)
+        return next()
+    }
     const newUser = userRepository.save({
         username, 
         email, 
