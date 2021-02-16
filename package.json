@@ -1,0 +1,12 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MaximeChartier/ING4_Apprenti_SI_02_Chartier_Maxime.git",
+  "author": "Maxime Chartier <maxime.chartier@orange.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "^0.0.1-security"
+  }
+}
