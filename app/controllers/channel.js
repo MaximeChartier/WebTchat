@@ -2,8 +2,8 @@ const {
   listAllChannels,
   createNewChannel,
   showChannel,
-  // updateChannel,
-  // deleteChannel,
+  updateChannel,
+  deleteChannel,
 } = require('../models/channel');
 
 exports.index = async (req, res) => {
@@ -39,12 +39,31 @@ exports.show = async (req, res) => {
     });
   }
 };
-/*
+
+
 exports.update = async (req, res) => {
-  // TODO update channel
-  // Poser l'algo par écrit avant (ACD)
+  const { channelId } = req.params;
+  const { body } = req;
+  try {
+    return res.status(200).json(await updateChannel(channelId, body));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'Channel not found',
+      dbError: err.message,
+    });
+  }
 };
 
 exports.delete = async (req, res) => {
-  // TODO delete channel
-}; */
+  const { channelId } = req.params;
+  try {
+    return res.status(204).json(await deleteChannel(channelId));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'Channel not found',
+      dbError: err.message,
+    });
+  }
+};
