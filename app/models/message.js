@@ -22,14 +22,15 @@ const listAllMessages = async () => new Promise((resolve, reject) => {
     });
 });
 
-const createNewMessage = (body) => {
-  if (!body.content) {
-    return null; // ne pas oublier les blindages !
+const createNewMessage = (body, user) => {
+  if (!body.content || !user) {
+    return null;
   }
 
   // on créé un objet message
   const message = {
     id: uuid(),
+    user_id: user.id,
     content: body.content,
     created_at: Date.now(),
 
@@ -97,10 +98,16 @@ const deleteMessage = async (messageId) => {
   });
 };
 
+const showUserMessages = async (userId) => {
+  const allMessage = await listAllMessages();
+  return allMessage.filter((m) => m.user_id === userId);
+};
+
 module.exports = {
   listAllMessages,
   createNewMessage,
   showMessage,
   updateMessage,
   deleteMessage,
+  showUserMessages,
 };

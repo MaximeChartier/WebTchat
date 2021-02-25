@@ -5,6 +5,9 @@ const {
   updateMessage,
   deleteMessage,
 } = require('../models/message');
+const {
+  showUser,
+} = require('../models/user');
 
 exports.index = async (req, res) => {
   const messages = await listAllMessages();
@@ -15,16 +18,21 @@ exports.index = async (req, res) => {
 exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
-  const message = await createNewMessage(body);
-
-  if (!message) {
-    return res.status(400).json({
-      error: 400,
-      message: "Require valid field : 'content'",
+  showUser(body.user_id).then((user) => {
+    createNewMessage(body, user).then((message) =>
+      // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
+      res.status(201).json(message)).catch(() => {
+      res.status(400).json({
+        error: 400,
+        message: "Require valid field : 'content', 'user_id'",
+      });
     });
-  }
-
-  return res.status(201).json(message); // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
+  }).catch(() => {
+    res.status(400).json({
+      error: 400,
+      message: 'User not found',
+    });
+  });
 };
 
 exports.show = async (req, res) => {

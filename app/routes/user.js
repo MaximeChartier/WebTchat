@@ -7,6 +7,7 @@ const userController = require('../controllers/user');
 router.get('/', userController.index);
 router.post('/', userController.create);
 router.get('/:userId', userController.show);
+router.get('/:userId/messages', userController.showMessages);
 router.put('/:userId', userController.update);
 router.delete('/:userId', userController.delete);
 

@@ -6,6 +6,10 @@ const {
   deleteUser,
 } = require('../models/user');
 
+const {
+  showUserMessages,
+} = require('../models/message');
+
 exports.index = async (req, res) => {
   const channels = await listAllUsers();
 
@@ -32,6 +36,20 @@ exports.show = async (req, res) => {
 
   try {
     return res.status(200).json(await showUser(userId));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'User not found',
+      dbError: err.message,
+    });
+  }
+};
+
+exports.showMessages = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await showUser(userId);
+    return res.status(200).json(await showUserMessages(user.id));
   } catch (err) {
     return res.status(404).json({
       error: 404,
