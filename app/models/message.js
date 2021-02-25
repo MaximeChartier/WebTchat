@@ -22,8 +22,8 @@ const listAllMessages = async () => new Promise((resolve, reject) => {
     });
 });
 
-const createNewMessage = (body, user) => {
-  if (!body.content || !user) {
+const createNewMessage = (body, user, channel) => {
+  if (!body.content || !user || !channel) {
     return null;
   }
 
@@ -31,6 +31,7 @@ const createNewMessage = (body, user) => {
   const message = {
     id: uuid(),
     user_id: user.id,
+    channel_id: channel.id,
     content: body.content,
     created_at: Date.now(),
 
@@ -103,6 +104,11 @@ const showUserMessages = async (userId) => {
   return allMessage.filter((m) => m.user_id === userId);
 };
 
+const showChannelMessages = async (channelId) => {
+  const allMessage = await listAllMessages();
+  return allMessage.filter((m) => m.channel_id === channelId);
+};
+
 module.exports = {
   listAllMessages,
   createNewMessage,
@@ -110,4 +116,5 @@ module.exports = {
   updateMessage,
   deleteMessage,
   showUserMessages,
+  showChannelMessages,
 };

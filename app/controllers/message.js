@@ -8,6 +8,9 @@ const {
 const {
   showUser,
 } = require('../models/user');
+const {
+  showChannel,
+} = require('../models/channel');
 
 exports.index = async (req, res) => {
   const messages = await listAllMessages();
@@ -19,18 +22,20 @@ exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
   showUser(body.user_id).then((user) => {
-    createNewMessage(body, user).then((message) =>
-      // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
-      res.status(201).json(message)).catch(() => {
+    showChannel(body.channel_id).then((channel) => {
+      createNewMessage(body, user, channel).then((message) =>
+        // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
+        res.status(201).json(message));
+    }).catch(() => {
       res.status(400).json({
         error: 400,
-        message: "Require valid field : 'content', 'user_id'",
+        message: "Require valid 'channel_id'",
       });
     });
   }).catch(() => {
     res.status(400).json({
       error: 400,
-      message: 'User not found',
+      message: "Require valid 'user_id'",
     });
   });
 };

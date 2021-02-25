@@ -6,6 +6,10 @@ const {
   deleteChannel,
 } = require('../models/channel');
 
+const {
+  showChannelMessages,
+} = require('../models/message');
+
 exports.index = async (req, res) => {
   const channels = await listAllChannels();
 
@@ -31,6 +35,20 @@ exports.show = async (req, res) => {
 
   try {
     return res.status(200).json(await showChannel(channelId));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'Channel not found',
+      dbError: err.message,
+    });
+  }
+};
+
+exports.showMessages = async (req, res) => {
+  const { channelId } = req.params;
+  try {
+    const channel = await showChannel(channelId);
+    return res.status(200).json(await showChannelMessages(channel.id));
   } catch (err) {
     return res.status(404).json({
       error: 404,
