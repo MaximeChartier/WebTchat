@@ -74,19 +74,48 @@ const showUser = (userId) => new Promise(((resolve, reject) => {
     }
   });
 }));
-  /*
-const updateChannel = async (channelId, body) => {
 
+const updateUser = (userId, body) => new Promise((async (resolve, reject) => {
+  let user;
+  try {
+    user = await showUser(userId);
+  } catch (err) {
+    throw new Error('user not found');
+  }
+  const newUser = {
+    ...user,
+    ...{
+      name: (body.name ? body.name : user.name),
+      email: (body.email ? body.email : user.email),
+      password: (body.password ? body.password : user.password),
+    },
+  };
+  db.put(`users:${userId}`, JSON.stringify(newUser), (err) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(newUser);
+    }
+  });
+}));
+
+const deleteUser = async (userId) => {
+  try {
+    await showUser(userId);
+  } catch (err) {
+    throw new Error('user not found');
+  }
+  db.del(`users:${userId}`, (err) => {
+    if (err) {
+      throw new Error('user delete error');
+    }
+  });
 };
 
-const deleteChannel = async (channelId) => {
-
-};
-*/
 module.exports = {
   listAllUsers,
   createNewUser,
   showUser,
-  // updateChannel,
-  // deleteChannel,
+  updateUser,
+  deleteUser,
 };

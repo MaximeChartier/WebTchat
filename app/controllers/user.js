@@ -2,8 +2,8 @@ const {
   listAllUsers,
   createNewUser,
   showUser,
-  // updateChannel,
-  // deleteChannel,
+  updateUser,
+  deleteUser,
 } = require('../models/user');
 
 exports.index = async (req, res) => {
@@ -40,13 +40,30 @@ exports.show = async (req, res) => {
     });
   }
 };
-/*
+
 exports.update = async (req, res) => {
-  // TODO update channel
-  // Poser l'algo par écrit avant (ACD)
+  const { userId } = req.params;
+  const { body } = req;
+  try {
+    return res.status(200).json(await updateUser(userId, body));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      user: 'User not found',
+      dbError: err.user,
+    });
+  }
 };
 
 exports.delete = async (req, res) => {
-  // TODO delete channel
+  const { userId } = req.params;
+  try {
+    return res.status(204).json(await deleteUser(userId));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'User not found',
+      dbError: err.user,
+    });
+  }
 };
-*/

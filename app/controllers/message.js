@@ -2,8 +2,8 @@ const {
   listAllMessages,
   createNewMessage,
   showMessage,
-  // updateChannel,
-  // deleteChannel,
+  updateMessage,
+  deleteMessage,
 } = require('../models/message');
 
 exports.index = async (req, res) => {
@@ -40,13 +40,29 @@ exports.show = async (req, res) => {
     });
   }
 };
-/*
 exports.update = async (req, res) => {
-  // TODO update message
-  // Poser l'algo par écrit avant (ACD)
+  const { messageId } = req.params;
+  const { body } = req;
+  try {
+    return res.status(200).json(await updateMessage(messageId, body));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'Message not found',
+      dbError: err.message,
+    });
+  }
 };
 
 exports.delete = async (req, res) => {
-  // TODO delete message
+  const { messageId } = req.params;
+  try {
+    return res.status(204).json(await deleteMessage(messageId));
+  } catch (err) {
+    return res.status(404).json({
+      error: 404,
+      message: 'Message not found',
+      dbError: err.message,
+    });
+  }
 };
-*/

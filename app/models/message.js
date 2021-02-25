@@ -62,19 +62,45 @@ const showMessage = (messageId) => new Promise(((resolve, reject) => {
   });
 }));
 
-/*
-const updateMessage = async (messageId, body) => {
-
-};
+const updateMessage = (messageId, body) => new Promise((async (resolve, reject) => {
+  let message;
+  try {
+    message = await showMessage(messageId);
+  } catch (err) {
+    throw new Error('message not found');
+  }
+  const newMessage = {
+    ...message,
+    ...{
+      content: (body.content ? body.content : message.content),
+    },
+  };
+  db.put(`messages:${messageId}`, JSON.stringify(newMessage), (err) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(newMessage);
+    }
+  });
+}));
 
 const deleteMessage = async (messageId) => {
-
+  try {
+    await showMessage(messageId);
+  } catch (err) {
+    throw new Error('message not found');
+  }
+  db.del(`messages:${messageId}`, (err) => {
+    if (err) {
+      throw new Error('message delete error');
+    }
+  });
 };
-*/
+
 module.exports = {
   listAllMessages,
   createNewMessage,
   showMessage,
-  // updateMessage,
-  // deleteMessage,
+  updateMessage,
+  deleteMessage,
 };

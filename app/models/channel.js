@@ -57,18 +57,18 @@ const showChannel = (channelId) => new Promise(((resolve, reject) => {
 }));
 
 const updateChannel = (channelId, body) => new Promise((async (resolve, reject) => {
-  let channel = undefined;
-  try{
+  let channel;
+  try {
     channel = await showChannel(channelId);
-  }catch(err){
-    throw new Error("channel not found");
+  } catch (err) {
+    throw new Error('channel not found');
   }
-  let newChannel = {
+  const newChannel = {
     ...channel,
     ...{
-      name : (body.name ? body.name : channel.name)
-    }
-  }
+      name: (body.name ? body.name : channel.name),
+    },
+  };
   db.put(`channels:${channelId}`, JSON.stringify(newChannel), (err) => {
     if (err) {
       reject(err);
@@ -79,16 +79,17 @@ const updateChannel = (channelId, body) => new Promise((async (resolve, reject) 
 }));
 
 const deleteChannel = async (channelId) => {
-  try{
+  try {
     await showChannel(channelId);
-  }catch(err){
-    throw new Error("channel not found");
+  } catch (err) {
+    throw new Error('channel not found');
   }
-  db.del(`channels:${channelId}`, function (err) {
-    if (err){
-      throw new Error("channel delete error");
-    };
-})};
+  db.del(`channels:${channelId}`, (err) => {
+    if (err) {
+      throw new Error('channel delete error');
+    }
+  });
+};
 
 module.exports = {
   listAllChannels,
