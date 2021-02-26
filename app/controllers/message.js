@@ -21,23 +21,19 @@ exports.index = async (req, res) => {
 exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
-  showUser(body.user_id).then((user) => {
-    showChannel(body.channel_id).then((channel) => {
-      createNewMessage(body, user, channel).then((message) =>
-        // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
-        res.status(201).json(message));
-    }).catch(() => {
-      res.status(400).json({
-        error: 400,
-        message: "Require valid 'channel_id'",
-      });
-    });
-  }).catch(() => {
-    res.status(400).json({
+  try {
+    const user = await showUser(body.user_id);
+    const channel = await showChannel(body.channel_id);
+    const message = await createNewMessage(body, user, channel);
+    // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
+    return res.status(201).json(message);
+  } catch (e) {
+    return res.status(400).json({
       error: 400,
-      message: "Require valid 'user_id'",
+      message: "Require valid 'content', 'channel_id', 'user_id'",
+      dbError: e.message,
     });
-  });
+  }
 };
 
 exports.show = async (req, res) => {
