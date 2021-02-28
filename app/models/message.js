@@ -34,7 +34,6 @@ const createNewMessage = (body, user, channel) => {
     channel_id: channel.id,
     content: body.content,
     created_at: Date.now(),
-
   };
 
   return new Promise(((resolve, reject) => {
@@ -64,25 +63,23 @@ const showMessage = (messageId) => new Promise(((resolve, reject) => {
   });
 }));
 
-const updateMessage = (messageId, body) => new Promise((async (resolve, reject) => {
-  let message;
-  try {
-    message = await showMessage(messageId);
-  } catch (err) {
-    throw new Error('message not found');
-  }
-  const newMessage = {
-    ...message,
-    ...{
-      content: (body.content ? body.content : message.content),
-    },
-  };
-  db.put(`messages:${messageId}`, JSON.stringify(newMessage), (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(newMessage);
-    }
+const updateMessage = (messageId, body) => new Promise(((resolve, reject) => {
+  showMessage(messageId).then((message) => {
+    const newMessage = {
+      ...message,
+      ...{
+        content: (body.content ? body.content : message.content),
+      },
+    };
+    db.put(`messages:${messageId}`, JSON.stringify(newMessage), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(newMessage);
+      }
+    });
+  }).catch(() => {
+    reject(new Error('message not found'));
   });
 }));
 

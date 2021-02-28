@@ -65,10 +65,47 @@ describe('channel api tests', () => {
         name: 'name',
       });
   });
+  it('show channel with id who does not exist', async () => {
+    // Ensure we list the channels correctly
+    await request(app)
+      .get('/api/v1/channels/fakeid')
+      .expect(404);
+  });
 
-  // TODO show channel with id who does not exist
+  it('update channel ', async () => {
+    const channel = {
+      id: '123',
+      name: 'name',
+    };
+    await db.put(`channels:${channel.id}`, JSON.stringify(channel));
+    // Ensure we list the channels correctly
+    await request(app)
+      .put('/api/v1/channels/123').send({
+        name: 'new_name',
+      })
+      .expect(200, {
+        id: '123',
+        name: 'new_name',
+      });
+  });
 
-  // TODO update channel with all cases
+  it('update not exist channel', async () => {
+    await request(app)
+      .put('/api/v1/channels/fakeid').send({
+        name: 'new_name',
+      })
+      .expect(404);
+  });
 
-  // TODO delete channel with all cases
+  it('delete channel ', async () => {
+    const channel = {
+      id: '123',
+      name: 'name',
+    };
+    await db.put(`channels:${channel.id}`, JSON.stringify(channel));
+    // Ensure we list the channels correctly
+    await request(app)
+      .delete('/api/v1/channels/123')
+      .expect(204);
+  });
 });

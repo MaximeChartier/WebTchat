@@ -56,40 +56,41 @@ const showChannel = (channelId) => new Promise(((resolve, reject) => {
   });
 }));
 
-const updateChannel = (channelId, body) => new Promise((async (resolve, reject) => {
-  let channel;
-  try {
-    channel = await showChannel(channelId);
-  } catch (err) {
-    throw new Error('channel not found');
-  }
-  const newChannel = {
-    ...channel,
-    ...{
-      name: (body.name ? body.name : channel.name),
-    },
-  };
-  db.put(`channels:${channelId}`, JSON.stringify(newChannel), (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(newChannel);
-    }
+const updateChannel = (channelId, body) => new Promise(((resolve, reject) => {
+  showChannel(channelId).then((channel) => {
+    const newChannel = {
+      ...channel,
+      ...{
+        name: (body.name ? body.name : channel.name),
+      },
+    };
+    db.put(`channels:${channelId}`, JSON.stringify(newChannel), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(newChannel);
+      }
+    });
+  }).catch(() => {
+    reject(new Error('channel not found'));
   });
 }));
 
-const deleteChannel = async (channelId) => {
-  try {
-    await showChannel(channelId);
-  } catch (err) {
-    throw new Error('channel not found');
-  }
-  db.del(`channels:${channelId}`, (err) => {
-    if (err) {
-      throw new Error('channel delete error');
-    }
-  });
-};
+const deleteChannel = (channelId) => new Promise(((resolve, reject) => {
+  showChannel(channelId)
+    .then(() => {
+      db.del(`channels:${channelId}`, (err) => {
+        if (err) {
+          reject(new Error('channel delete error'));
+        } else {
+          resolve(true);
+        }
+      });
+    })
+    .catch(() => {
+      reject(new Error('channel not found'));
+    });
+}));
 
 module.exports = {
   listAllChannels,

@@ -30,7 +30,6 @@ const createNewUser = (body) => {
     return null;
   }
 
-  // on créé un objet channel
   const user = {
     id: uuid(),
     name: body.name,
@@ -75,29 +74,28 @@ const showUser = (userId) => new Promise(((resolve, reject) => {
   });
 }));
 
-const updateUser = (userId, body) => new Promise((async (resolve, reject) => {
-  let user;
-  try {
-    user = await showUser(userId);
-  } catch (err) {
-    throw new Error('user not found');
-  }
-  const newUser = {
-    ...user,
-    ...{
-      name: (body.name ? body.name : user.name),
-      email: (body.email ? body.email : user.email),
-      password: (body.password ? body.password : user.password),
-    },
-  };
-  db.put(`users:${userId}`, JSON.stringify(newUser), (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(newUser);
-    }
+const updateUser = (userId, body) => new Promise(((resolve, reject) => {
+  showUser(userId).then((user) => {
+    const newUser = {
+      ...user,
+      ...{
+        name: (body.name ? body.name : user.name),
+        email: (body.email ? body.email : user.email),
+        password: (body.password ? body.password : user.password),
+      },
+    };
+    db.put(`users:${userId}`, JSON.stringify(newUser), (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(newUser);
+      }
+    });
+  }).catch(() => {
+    reject(new Error('user not found'));
   });
-}));
+}
+));
 
 const deleteUser = async (userId) => {
   try {
