@@ -25,11 +25,17 @@ const routerApiV1 = express.Router();
 const channelRoutes = require('./app/routes/channel');
 const usersRoutes = require('./app/routes/user');
 const messagesRoutes = require('./app/routes/message');
+const loginRouter = require('./app/routes/login');
 
 routerApiV1.use('/channels', channelRoutes);
 routerApiV1.use('/users', usersRoutes);
 routerApiV1.use('/messages', messagesRoutes);
+routerApiV1.use('/', loginRouter);
 
+// Router api
 app.use('/api/v1', routerApiV1);
+
+// Gestion des 404
+app.get('*', (req, res) => res.status(404).json({ message: 'Page not found' }));
 
 module.exports = app;
