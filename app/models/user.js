@@ -1,5 +1,5 @@
 const { v4: uuid } = require('uuid');
-const db = require('../../db_config');
+const db = require('../config/db_config');
 
 const listAllUsers = async () => new Promise((resolve, reject) => {
   const users = [];

@@ -1,4 +1,15 @@
 
+# Lancer les serveurs de développement
+
+```bash
+#installer les dépendances
+yarn
+#démarrer les serveurs
+yarn dev
+#builder le front
+yarn build
+```
+
 # Final project
 
 ## Introduction
