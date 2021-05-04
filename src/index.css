@@ -6,6 +6,13 @@ body {
   padding: 50
 }
 
+.app {
+  color: #fff;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .header {
   height: 60px;
   background-color: #00000096;
