@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Channels from './Channels';
 import Channel from './Channel';
+import AddChannel from './components/AddChannel';
 
 export default function Main () {
   const [selectedChannel, setSelectedChannel] = useState(0);
@@ -97,6 +98,9 @@ export default function Main () {
   }
   ]);
 
+  const [channelsList, setChannelsList] = useState([])
+
+
   const addMessage = ({
     content
   }) => {
@@ -112,6 +116,7 @@ export default function Main () {
   return (
     <>
       <div>
+        <AddChannel/>
         <div>
           <label htmlFor="author">Auteur :</label>
           <input className="author" type="text" value={author} onChange={a => setAuthor(a.value)} name="author"/>
