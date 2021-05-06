@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Channels from './Channels';
 import Channel from './Channel';
-import AddChannel from './components/AddChannel';
 
 export default function Main () {
-  const [selectedChannel, setSelectedChannel] = useState(0);
+  const [selectedChannel, setSelectedChannel] = useState({
+    id: ''
+  });
   const [author, setAuthor] = useState('max');
   const [channels, setChannels] = useState([
     {
@@ -19,28 +20,7 @@ export default function Main () {
         monolithic react Component into multiple section. In the end, we should end
         up with the following components: 'Header', 'Footer', 'Main', 'Channels',
         'Channel', 'Messages', 'MessageSend':
-        
-        - 'App.js' file uses 'Header.js', 'Main.js', 'Footer.js'
-        - 'Main.js' file uses 'Channels.js', 'Channel.js'
-        - 'Channels.js' prints the list of channels
-        - 'Channel.js' prints the messages, uses 'Messages.js' and 'MessageSend.js'
-        - 'Messages.js' prints the list of messages inside the current channel
-        - 'MessageForm.js' send a new message
-        
-        \`\`\`
-        +--------------------------------------------+
-        |                  Header                    |
-        +--------------------------------------------+
-        |   Channels    |          Channel           |
-        |               | +------------------------+ |
-        |               | |    Messages / Message  | |
-        |               | +------------------------+ |
-        |               | |      MessageSend       | |
-        |               | +------------------------+ |
-        +--------------------------------------------+
-        |                  Footer                    |
-        +--------------------------------------------+
-        \`\`\`
+       
         `
         }, {
             author: 'david',
@@ -60,29 +40,7 @@ export default function Main () {
         
         Format the date in a human readable format. While the date is generated on
         the server side to ensure its relevance and prevent from forgery, it must be
-        displayed according to the user browser local. The
-        [Moment.js](https://momentjs.com/) library has been the library of choice
-        for many years to accomplish date formatting. Read what is displayed on the
-        top right corner of their homepage, it is now depreciated. Read the reasons
-        and act accordingly.
-        `
-        }, {
-            author: 'david',
-            creation: 1602844139200,
-            content: `
-        ## 4 - Support message contents in Markdown - Level hard
-        
-        Markdown is the most popular syntax to format text into HTML. It is used
-        by the majority of the project Readme files, to write documentation and to
-        generate websites.
-        
-        I recommand you to use the [unified](https://unifiedjs.com/) which is very
-        powerful and comes with a lot of plugins. You can read the Markdown to HTML
-        guide in the learn section and enrich it with your selection of relevant
-        plugins.
-        
-        Consider adding syntax highlight support with a library like
-        [Prism](https://prismjs.com/).
+        displayed according to the user browser local. 
         `
         }]
     },
@@ -100,7 +58,6 @@ export default function Main () {
 
   const [channelsList, setChannelsList] = useState([])
 
-
   const addMessage = ({
     content
   }) => {
@@ -112,20 +69,19 @@ export default function Main () {
     });
     setChannels(tmp);
   }
-  
+
   return (
-    <>
-      <div>
-        <AddChannel/>
+    <div className="flex">
+      <div className="stack">
         <div>
           <label htmlFor="author">Auteur :</label>
           <input className="author" type="text" value={author} onChange={a => setAuthor(a.value)} name="author"/>
         </div>
-        <Channels channels={channels} setSelectedChannel={setSelectedChannel}/>
+        <Channels setSelectedChannel={setSelectedChannel}/>
       </div>
-      <div>
-        <Channel addMessage={addMessage} channel={channels[selectedChannel]}/>
+      <div className="w100">
+        <Channel addMessage={addMessage} channel={selectedChannel}/>
       </div>
-    </>
+    </div>
   )
 }

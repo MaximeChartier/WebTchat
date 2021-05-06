@@ -1,25 +1,24 @@
 import React, {useState} from 'react';
+import { FetchForm, FormField, FormPrimaryButton } from './components/Form.jsx'
 
 export default function  MessageSend ({ addMessage}){
-    const [content, setContent] = useState('');
+	const [content, setContent] = useState('');
 
-    const onSubmit = (e) => {
-        addMessage({content});
-        setContent('');
-    };
+	const onSuccess = (rep) => {
+		console.log(rep)
+	}
 
-    const onChange = (e) => {
-        setContent(e.target.value);
-    };
-
-    return (
-        <div>
-            <textarea
-                onChange={onChange}
-                name="content"
-                rows={5}
-                value={content}
-            />
-            <button onClick={onSubmit} type="submit">Send</button>
-        </div>)
+	return (
+		<FetchForm action='' onSuccess={onSuccess}>
+			<div className="flex center">
+				<div className='mr1'>
+					<FormField type='textarea' id='form-message' name='name' required>
+					 Ajouter un commentaire
+					</FormField>
+				</div>
+				<div>
+					<FormPrimaryButton>Envoyer</FormPrimaryButton>
+				</div>
+			</div>
+		</FetchForm>)
 };

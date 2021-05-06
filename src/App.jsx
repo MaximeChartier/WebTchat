@@ -1,17 +1,19 @@
 import React from 'react';
 import Main from './Main';
+import { ModalDialog } from '@sb-elements/all'
 
+customElements.define('modal-dialog', ModalDialog)
 
 export default () => {
 
     return (
-        <div className="app">
+        <div className="stack">
             <header className="header">
                 <h1>header</h1>
             </header>
-            <main className='main'>
+            <div className='container'>
                 <Main />
-            </main>
+            </div>
             <footer className="footer">
                 footer
             </footer>
