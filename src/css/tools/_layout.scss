@@ -351,4 +351,15 @@
       display: none;
     }
   }
-  
+
+  .bl{
+    border-left: solid 1px var(--contrast);
+  }
+
+  .bt{
+    border-top: solid 1px var(--contrast);
+  }
+
+  .bb{
+    border-bottom: solid 1px var(--contrast);
+  }

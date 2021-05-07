@@ -21,7 +21,16 @@ exports.login = async (req, res) => {
 
   // Pas bon
   if (!user) {
-    return res.status(400).json({ message: 'Error. Wrong email or password' });
+    return res.status(400).json({ violations: [
+      {
+        propertyPath: "email",
+        message: "Email invalide"
+      },
+      {
+        propertyPath: "password",
+        message: "Mot de passe invalide"
+      }
+    ]});
   }
 
   const token = jwt.sign({
@@ -29,5 +38,5 @@ exports.login = async (req, res) => {
     username: user.username,
   }, SECRET, { expiresIn: '3 hours' });
 
-  return res.json({ access_token: token });
+  return res.json({ ...user, access_token: token });
 };

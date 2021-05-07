@@ -19,13 +19,13 @@ export default function Channel ({channel}) {
   return (
     <>
       {!done ? 'Chargement...' : 
-        <div style={{backgroundColor:'red'}} className="stack" >
-          <h1 className="h3 center py1" style={{backgroundColor:'green'}}>{channel.name}</h1>
+        <div className="stack" >
+          <h1 className="h3 center py1">{channel.name}</h1>
           <div className='stack'>
               <Messages messages={messages}></Messages>
           </div>
           <div>
-            <MessageSend addMessage={addMessage}/>
+            <MessageSend channel={channel} addMessage={addMessage}/>
           </div>
         </div>
       }

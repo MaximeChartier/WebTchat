@@ -1,6 +1,6 @@
 :root {
   --color-dark: #000;
-  --color: #121c42;
+  --color: #38322b;
   --color-light: #121c4299;
   --color-inversed: #effbec;
   --color-inversed60: #effbec99;
@@ -26,7 +26,7 @@
   --skeleton: var(--border-light);
   --skeleton-wave: var(--border-light);
   --selection-background: var(--border);
-  --header-background: #FFFFFFF2;
+  --header-background: #cec2c2f2;
   --header-background-inversed: #4869eeF2;
 }
 
@@ -38,3 +38,5 @@
 @import 'modules/modal';
 @import 'modules/form';
 @import 'modules/btn';
+@import 'modules/header';
+@import 'modules/app';

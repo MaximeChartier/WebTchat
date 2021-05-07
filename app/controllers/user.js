@@ -19,16 +19,16 @@ exports.index = async (req, res) => {
 exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
-  const user = await createNewUser(body);
-
-  if (!user) {
+  try{
+    const user = await createNewUser(body);
+    return res.status(201).json(user);
+  }catch (violation){
     return res.status(400).json({
       error: 400,
-      message: "Require valid fields : 'name', 'email', 'password'",
+      violations: [violation]
     });
   }
 
-  return res.status(201).json(user); // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
 };
 
 exports.show = async (req, res) => {

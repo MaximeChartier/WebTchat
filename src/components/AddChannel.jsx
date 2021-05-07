@@ -17,7 +17,7 @@ export default function AddChannel ({handleSuccess}) {
 
     return (
         <>
-            <SecondaryButton size='small' onClick={toggleModal}>
+            <SecondaryButton size='small' class="btn btn-secondary btn-small center w100" onClick={toggleModal}>
                 Ajouter une channel
             </SecondaryButton>
             {modal &&

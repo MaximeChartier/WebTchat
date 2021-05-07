@@ -26,7 +26,7 @@ export default function Channels ({ setSelectedChannel }) {
       <div>
         {!done ? 'Chargement...' : channels.map((c, i)=> 
           <div className="mb1" key={i}>
-            <PrimaryButton size="small" onClick={() => setSelectedChannel(c)} >
+            <PrimaryButton size="small" class="btn btn-primary btn-small w100" onClick={() => setSelectedChannel(c)} >
               {c.name}
             </PrimaryButton>
           </div>

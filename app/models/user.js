@@ -23,11 +23,23 @@ const listAllUsers = async () => new Promise((resolve, reject) => {
 });
 
 const createNewUser = (body) => {
-  if (!body.name || !body.email || !body.password) {
-    return null;
+  if (!body.name) {
+    throw {
+      propertyPath: "name",
+      message: "Username invalide"
+    }
   }
-  if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(body.email)) {
-    return null;
+  if (!body.password) {
+    throw {
+      propertyPath: "password",
+      message: "Mot de passe invalide"
+    }
+  }
+  if (!body.email || !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(body.email)) {
+     throw {
+      propertyPath: "email",
+      message: "Email invalide"
+    }
   }
 
   const user = {

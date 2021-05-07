@@ -154,16 +154,6 @@ function FieldCheckbox (props) {
   return <input {...props} />
 }
 
-function FieldEditor (props) {
-  const ref = useRef(null)
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.syncEditor()
-    }
-  }, [props.value])
-  return <textarea {...props} is='markdown-editor' ref={ref} />
-}
-
 /**
  * Version contextualisée des champs pour le formulaire
  */
@@ -226,7 +216,6 @@ export function FetchForm ({
       } else if (e.detail) {
         //flash(e.detail, 'danger', null)
       } else {
-        //flash(e, 'danger', null)
         throw e
       }
     }

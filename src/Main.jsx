@@ -72,14 +72,11 @@ export default function Main () {
 
   return (
     <div className="flex">
-      <div className="stack">
-        <div>
-          <label htmlFor="author">Auteur :</label>
-          <input className="author" type="text" value={author} onChange={a => setAuthor(a.value)} name="author"/>
-        </div>
+      <div className="stack channels">
+        <p >Fils de discussion :</p>
         <Channels setSelectedChannel={setSelectedChannel}/>
       </div>
-      <div className="w100">
+      <div className="channel">
         <Channel addMessage={addMessage} channel={selectedChannel}/>
       </div>
     </div>
