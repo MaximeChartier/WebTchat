@@ -69,6 +69,7 @@ const updateMessage = (messageId, body) => new Promise(((resolve, reject) => {
       ...message,
       ...{
         content: (body.content ? body.content : message.content),
+        created_at: Date.now()
       },
     };
     db.put(`messages:${messageId}`, JSON.stringify(newMessage), (err) => {

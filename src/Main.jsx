@@ -7,6 +7,11 @@ export default function Main () {
     id: ''
   });
 
+  useEffect(async() => {
+    window.history.replaceState({}, "", selectedChannel.name);
+  }, [selectedChannel])
+
+
   return (
     <div className="flex">
       <div className="stack channels">

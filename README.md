@@ -15,7 +15,7 @@ yarn dev
 - [x] Partager l’accès au channel avec d’autres utilisateurs.
 - [x] Accéder aux channels auxquels il a été ajouté.
 - [x] Envoyer un nouveau message.
-- [ ] Modifier et supprimer son message.
+- [x] Modifier et supprimer son message.
 - [ ] Automatiser l’association de leur email avec leur gravatar, sélectionner un avatar proposé par l’application et uploader son propre gravatar.
 - [ ] Système de préférence de compte.
 - [x] Bénéficier d’une application sécurisée dans laquelle l’accès aux ressources est vérifié (authentification et autorisation).
@@ -29,8 +29,8 @@ yarn dev
 - [ ] Channel membership and access / points: 4   
 - [ ] Ressource access control / points: 4   
 - [ ] Invite users to channels / points: 6   
-- [ ] Message modification / points: 2   
-- [ ] Message removal / points: 2   
+- [x] Message modification / points: 2   
+- [x] Message removal / points: 2   
 - [ ] Account settings  / points: 4   
 - [ ] Gravatar integration  / points: 2
 - [ ] Avatar selection / points: 4
