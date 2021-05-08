@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
   try {
-    const user = await showUser(body.user_id);
+    const user = await showUser(req.user.id);
     const channel = await showChannel(body.channel_id);
     const message = await createNewMessage(body, user, channel);
     // Code 201 pour une création : https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP

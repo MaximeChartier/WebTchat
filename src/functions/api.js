@@ -20,11 +20,22 @@ export async function jsonFetch (url, params = {}) {
   if (params.body && typeof params.body === 'object') {
     params.body = JSON.stringify(params.body)
   }
+  let authorization = null
+  const user = localStorage.getItem('user')
+  if(user){
+      const t = JSON.parse(user)
+      if(t.access_token){
+        authorization = {
+          'Authorization': 'Bearer ' + t.access_token
+        }
+      }
+  }
   params = {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-Requested-With': 'XMLHttpRequest',
+      ...authorization
     },
     ...params
   }

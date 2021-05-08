@@ -1,3 +1,4 @@
+const { showUser } = require('../models/user');
 const {
   listAllChannels,
   createNewChannel,
@@ -48,7 +49,15 @@ exports.showMessages = async (req, res) => {
   const { channelId } = req.params;
   try {
     const channel = await showChannel(channelId);
-    return res.status(200).json(await showChannelMessages(channel.id));
+    const messages = await showChannelMessages(channel.id)
+    const hidratedMessages = []
+    await Promise.all(messages.map(async (m) => {
+      const user = await showUser(m.user_id)
+      m.username = user.name
+      m.gravatarId = user.gravatarId
+      hidratedMessages.push(m)
+    }))
+    return res.status(200).json(hidratedMessages);
   } catch (err) {
     return res.status(404).json({
       error: 404,

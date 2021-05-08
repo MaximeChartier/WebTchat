@@ -12,7 +12,8 @@ const listAllUsers = async () => new Promise((resolve, reject) => {
   // https://github.com/Level/level#createReadStream
   db.createReadStream(options)
     .on('data', ({ value }) => {
-      users.push(JSON.parse(value));
+      value = JSON.parse(value)
+      users.push(value);
     })
     .on('error', (err) => {
       reject(err);
@@ -35,6 +36,12 @@ const createNewUser = (body) => {
       message: "Mot de passe invalide"
     }
   }
+  if (!body.gravatarId) {
+    throw {
+      propertyPath: "gravatarId",
+      message: "ID gravatar invalide"
+    }
+  }
   if (!body.email || !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(body.email)) {
      throw {
       propertyPath: "email",
@@ -44,6 +51,7 @@ const createNewUser = (body) => {
 
   const user = {
     id: uuid(),
+    gravatarId: body.gravatarId,
     name: body.name,
     email: body.email,
     password: body.password,
@@ -93,6 +101,7 @@ const updateUser = (userId, body) => new Promise(((resolve, reject) => {
       ...{
         name: (body.name ? body.name : user.name),
         email: (body.email ? body.email : user.email),
+        gravatarId: (body.gravatarId ? body.gravatarId : user.gravatarId),
         password: (body.password ? body.password : user.password),
       },
     };

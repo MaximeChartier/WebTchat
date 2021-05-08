@@ -1,17 +1,34 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import SignUp from './SignUp.jsx';
 import SignIn from './SignIn.jsx';
 import { PrimaryButton, SecondaryButton} from '../components/Button.jsx'
 
-export default function  Header (){
+export default function  Header ({logged}){
 
     const [user, setUser] = useState({})
+    const [tryReload, setTryReload] = useState(false)
+
+    useEffect((async () => {
+        const u = localStorage.getItem('user')
+        if(u){
+            const t = JSON.parse(u)
+            if(t.name){
+                setUser(t)
+                logged(true)
+                setTryReload(true)
+            }
+        }
+    }), [tryReload])
 
 	const loginSuccess = (rep) => {
+        localStorage.setItem('user', JSON.stringify(rep))
         setUser(rep)
+        logged(true)
 	}
     const logout = async () => {
+        localStorage.clear()
         setUser({})
+        logged(false)
     }
 
 	return (

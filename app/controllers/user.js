@@ -11,9 +11,9 @@ const {
 } = require('../models/message');
 
 exports.index = async (req, res) => {
-  const channels = await listAllUsers();
-
-  return res.status(200).json(channels);
+  const users = await listAllUsers();
+  users.map(u => u.password = null)
+  return res.status(200).json(users);
 };
 
 exports.create = async (req, res) => {
@@ -21,6 +21,7 @@ exports.create = async (req, res) => {
 
   try{
     const user = await createNewUser(body);
+    user.password = null
     return res.status(201).json(user);
   }catch (violation){
     return res.status(400).json({
@@ -35,7 +36,9 @@ exports.show = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    return res.status(200).json(await showUser(userId));
+    const user = await showUser(userId)
+    user.password = null
+    return res.status(200).json(user);
   } catch (err) {
     return res.status(404).json({
       error: 404,

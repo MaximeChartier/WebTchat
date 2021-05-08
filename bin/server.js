@@ -20,10 +20,12 @@ const usersRoutes = require('../app/routes/user');
 const messagesRoutes = require('../app/routes/message');
 const loginRouter = require('../app/routes/login');
 
-routerApiV1.use('/channels', channelRoutes);
-routerApiV1.use('/users', usersRoutes);
-routerApiV1.use('/messages', messagesRoutes);
+const auth = require('../app/middleware/auth').auth
+
 routerApiV1.use('/', loginRouter);
+routerApiV1.use('/users', usersRoutes);
+routerApiV1.use('/channels', auth, channelRoutes);
+routerApiV1.use('/messages', auth,  messagesRoutes);
 
 // Router api
 app.use('/api/v1', routerApiV1);

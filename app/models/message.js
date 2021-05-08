@@ -103,7 +103,9 @@ const showUserMessages = async (userId) => {
 
 const showChannelMessages = async (channelId) => {
   const allMessage = await listAllMessages();
-  return allMessage.filter((m) => m.channel_id === channelId);
+  return allMessage.filter((m) => m.channel_id === channelId).sort(function(a,b){
+    return a.created_at - b.created_at;
+});
 };
 
 module.exports = {
