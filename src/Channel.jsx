@@ -37,9 +37,15 @@ export default function Channel ({channel}) {
 
   return (
     <>
-      {!done ? 'Chargement...' : 
+      {!done ? 
+        <div className="m2">
+          Choisissez un fil de discussion
+        </div> : 
         <div className="stack" >
-          <h1 className="h3 center py1">{channel.name}</h1>
+          <div className='flex'>
+            <h1 className="ml3 h3 center py1">{channel.name}</h1>
+            <div>URL du fil : <a className="bold">{window.location.origin}/{channel.name}</a></div>
+          </div>
           <Messages localUser={user} messages={messages}></Messages>
           <div>
             <MessageSend channel={channel} addMessage={handleAddMessage}/>

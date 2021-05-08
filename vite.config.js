@@ -5,7 +5,7 @@ import reactRefresh from '@vitejs/plugin-react-refresh';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
-  base: '/assets/',
+  base: '/',
   build: {
     polyfillDynamicImport: false,
     assetsDir: '',

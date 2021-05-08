@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { PrimaryButton } from './components/Button.jsx'
 import { useJsonFetchOrFlash } from './functions/hooks'
 import AddChannel from './components/AddChannel';
@@ -7,15 +7,27 @@ export default function Channels ({ setSelectedChannel }) {
 
   const { loading, done, fetch } = useJsonFetchOrFlash('channels')
   const [ channels, setChannels ] = useState([])
+  const calledOnce = useRef(false);
+
   useEffect(async () => {
     setChannels(await fetch())
   }, [done])
 
   useEffect(async () => {
-    if(channels.length > 0){
-      setSelectedChannel(channels[0])
+    if(calledOnce.current){
+      return
     }
-  }, [loading])
+    if (channels.length <= 0){
+      return
+    }
+    calledOnce.current = true
+    channels.map(c => {
+      if(window.location.pathname.split('/')[1] == c.name){    
+        setSelectedChannel(c)
+        window.history.replaceState({}, "", "/");
+      }
+    })
+  }, [channels])
 
   const handleAddChannel = async (newChannel) => {
     setChannels([...channels, newChannel])

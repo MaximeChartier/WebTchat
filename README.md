@@ -12,7 +12,7 @@ yarn dev
 
 - [x] S’authentifier auprès de l’application avec un compte local et un formulaire d’inscription.
 - [x] Naviguer au travers de ses channels et des messages du channel sélectionné.
-- [ ] Partager l’accès au channel avec d’autres utilisateurs.
+- [x] Partager l’accès au channel avec d’autres utilisateurs.
 - [x] Accéder aux channels auxquels il a été ajouté.
 - [x] Envoyer un nouveau message.
 - [ ] Modifier et supprimer son message.
