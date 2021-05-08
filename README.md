@@ -26,12 +26,12 @@ yarn dev
 - [x] Sign In, Sign Up, Log Out / points: 4   
 - [x] Welcome screens / points: 4   
 - [x] New channel creation  / points: 6   
-- [ ] Channel membership and access / points: 4   
-- [ ] Ressource access control / points: 4   
-- [ ] Invite users to channels / points: 6   
-- [x] Message modification / points: 2   
-- [x] Message removal / points: 2   
-- [ ] Account settings  / points: 4   
+- [ ] Channel membership and access / points: 4
+- [ ] Ressource access control / points: 4
+- [ ] Invite users to channels / points: 6
+- [x] Message modification / points: 2
+- [x] Message removal / points: 2
+- [ ] Account settings  / points: 4
 - [ ] Gravatar integration  / points: 2
 - [ ] Avatar selection / points: 4
 - [ ] Personal custom avatar / points: 6   

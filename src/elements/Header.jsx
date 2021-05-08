@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import SignUp from './SignUp.jsx';
 import SignIn from './SignIn.jsx';
 import { PrimaryButton, SecondaryButton} from '../components/Button.jsx'
+import AccoutSettings from './AccountSetting.jsx';
 
 export default function  Header ({logged}){
 
@@ -40,9 +41,7 @@ export default function  Header ({logged}){
                     </p>
                     <div className="flex">
                         <div className="mr1">
-                            <SecondaryButton size='small'>
-                                Paramètre
-                            </SecondaryButton> 
+                            <AccoutSettings userUpdated={loginSuccess} ></AccoutSettings>
                         </div>
                         <div>                        
                             <PrimaryButton size='small' onClick={logout}>

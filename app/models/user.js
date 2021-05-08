@@ -55,6 +55,7 @@ const createNewUser = (body) => {
     name: body.name,
     email: body.email,
     password: body.password,
+    darkTheme: false
   };
 
   return new Promise(((resolve, reject) => {
@@ -95,6 +96,9 @@ const showUser = (userId) => new Promise(((resolve, reject) => {
 }));
 
 const updateUser = (userId, body) => new Promise(((resolve, reject) => {
+  if(body.darkTheme != undefined){
+    body.darkTheme = true
+  } else { body.darkTheme = false }
   showUser(userId).then((user) => {
     const newUser = {
       ...user,
@@ -103,6 +107,7 @@ const updateUser = (userId, body) => new Promise(((resolve, reject) => {
         email: (body.email ? body.email : user.email),
         gravatarId: (body.gravatarId ? body.gravatarId : user.gravatarId),
         password: (body.password ? body.password : user.password),
+        darkTheme: body.darkTheme
       },
     };
     db.put(`users:${userId}`, JSON.stringify(newUser), (err) => {
