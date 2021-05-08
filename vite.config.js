@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
@@ -12,11 +11,11 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined // Désactive la séparation du vendor
+        manualChunks: undefined, // Désactive la séparation du vendor
       },
       input: {
-        app: 'src/index.jsx'
-      }
-    }
-  }
+        app: 'src/index.jsx',
+      },
+    },
+  },
 });

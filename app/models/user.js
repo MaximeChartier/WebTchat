@@ -12,7 +12,7 @@ const listAllUsers = async () => new Promise((resolve, reject) => {
   // https://github.com/Level/level#createReadStream
   db.createReadStream(options)
     .on('data', ({ value }) => {
-      value = JSON.parse(value)
+      value = JSON.parse(value);
       users.push(value);
     })
     .on('error', (err) => {
@@ -26,27 +26,27 @@ const listAllUsers = async () => new Promise((resolve, reject) => {
 const createNewUser = (body) => {
   if (!body.name) {
     throw {
-      propertyPath: "name",
-      message: "Username invalide"
-    }
+      propertyPath: 'name',
+      message: 'Username invalide',
+    };
   }
   if (!body.password) {
     throw {
-      propertyPath: "password",
-      message: "Mot de passe invalide"
-    }
+      propertyPath: 'password',
+      message: 'Mot de passe invalide',
+    };
   }
   if (!body.gravatarId) {
     throw {
-      propertyPath: "gravatarId",
-      message: "ID gravatar invalide"
-    }
+      propertyPath: 'gravatarId',
+      message: 'ID gravatar invalide',
+    };
   }
   if (!body.email || !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(body.email)) {
-     throw {
-      propertyPath: "email",
-      message: "Email invalide"
-    }
+    throw {
+      propertyPath: 'email',
+      message: 'Email invalide',
+    };
   }
 
   const user = {

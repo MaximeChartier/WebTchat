@@ -12,32 +12,31 @@ const {
 
 exports.index = async (req, res) => {
   const users = await listAllUsers();
-  users.map(u => u.password = null)
+  users.map((u) => u.password = null);
   return res.status(200).json(users);
 };
 
 exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
-  try{
+  try {
     const user = await createNewUser(body);
-    user.password = null
+    user.password = null;
     return res.status(201).json(user);
-  }catch (violation){
+  } catch (violation) {
     return res.status(400).json({
       error: 400,
-      violations: [violation]
+      violations: [violation],
     });
   }
-
 };
 
 exports.show = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const user = await showUser(userId)
-    user.password = null
+    const user = await showUser(userId);
+    user.password = null;
     return res.status(200).json(user);
   } catch (err) {
     return res.status(404).json({

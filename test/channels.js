@@ -1,6 +1,6 @@
 const request = require('supertest');
-const app = require('../app');
-const db = require('../db_config');
+const app = require('../bin/server');
+const db = require('../app/config/db_config');
 
 describe('channel api tests', () => {
   beforeEach(async () => {

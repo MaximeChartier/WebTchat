@@ -21,16 +21,18 @@ exports.login = async (req, res) => {
 
   // Pas bon
   if (!user) {
-    return res.status(400).json({ violations: [
-      {
-        propertyPath: "email",
-        message: "Email invalide"
-      },
-      {
-        propertyPath: "password",
-        message: "Mot de passe invalide"
-      }
-    ]});
+    return res.status(400).json({
+      violations: [
+        {
+          propertyPath: 'email',
+          message: 'Email invalide',
+        },
+        {
+          propertyPath: 'password',
+          message: 'Mot de passe invalide',
+        },
+      ],
+    });
   }
 
   const token = jwt.sign({

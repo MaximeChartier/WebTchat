@@ -69,7 +69,7 @@ const updateMessage = (messageId, body) => new Promise(((resolve, reject) => {
       ...message,
       ...{
         content: (body.content ? body.content : message.content),
-        created_at: Date.now()
+        created_at: Date.now(),
       },
     };
     db.put(`messages:${messageId}`, JSON.stringify(newMessage), (err) => {
@@ -104,9 +104,7 @@ const showUserMessages = async (userId) => {
 
 const showChannelMessages = async (channelId) => {
   const allMessage = await listAllMessages();
-  return allMessage.filter((m) => m.channel_id === channelId).sort(function(a,b){
-    return a.created_at - b.created_at;
-});
+  return allMessage.filter((m) => m.channel_id === channelId).sort((a, b) => a.created_at - b.created_at);
 };
 
 module.exports = {

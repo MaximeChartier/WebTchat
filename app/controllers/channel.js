@@ -49,14 +49,14 @@ exports.showMessages = async (req, res) => {
   const { channelId } = req.params;
   try {
     const channel = await showChannel(channelId);
-    const messages = await showChannelMessages(channel.id)
-    const hidratedMessages = []
+    const messages = await showChannelMessages(channel.id);
+    const hidratedMessages = [];
     await Promise.all(messages.map(async (m) => {
-      const user = await showUser(m.user_id)
-      m.username = user.name
-      m.gravatarId = user.gravatarId
-      hidratedMessages.push(m)
-    }))
+      const user = await showUser(m.user_id);
+      m.username = user.name;
+      m.gravatarId = user.gravatarId;
+      hidratedMessages.push(m);
+    }));
     return res.status(200).json(hidratedMessages);
   } catch (err) {
     return res.status(404).json({
