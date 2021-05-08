@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Main from './Main';
 import { ModalDialog } from '@sb-elements/all'
 import Header from './elements/Header';
+import { AjaxDelete } from './components/AjaxDelete';
 
 customElements.define('modal-dialog', ModalDialog)
+customElements.define('ajax-delete', AjaxDelete)
 
 export default () => {
     
