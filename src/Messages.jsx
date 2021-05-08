@@ -18,8 +18,8 @@ export default function Messages ({ messages }) {
 
   return (
     <div className='stack messages'>
-      {localUser && messages.map((message, i) => (
-          <Message key={i} localUser={localUser} message={message}/>
+      {localUser && messages.map((message) => (
+          <Message key={message.id} localUser={localUser} message={message}/>
       ))}
     </div>
   )

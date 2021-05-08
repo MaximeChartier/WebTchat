@@ -24,7 +24,7 @@ yarn dev
 - [ ] Qualité globale du code (indentation, clarté, …) 4
 - [ ] Apparence globale de l’application web 4
 - [x] Sign In, Sign Up, Log Out / points: 4   
-- [ ] Welcome screens / points: 4   
+- [x] Welcome screens / points: 4   
 - [x] New channel creation  / points: 6   
 - [ ] Channel membership and access / points: 4   
 - [ ] Ressource access control / points: 4   
