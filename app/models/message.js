@@ -63,8 +63,11 @@ const showMessage = (messageId) => new Promise(((resolve, reject) => {
   });
 }));
 
-const updateMessage = (messageId, body) => new Promise(((resolve, reject) => {
+const updateMessage = (messageId, body, localUser) => new Promise(((resolve, reject) => {
   showMessage(messageId).then((message) => {
+    if(message.user_id !== localUser.id){
+      throw "Erreur"
+    }
     const newMessage = {
       ...message,
       ...{
@@ -84,9 +87,12 @@ const updateMessage = (messageId, body) => new Promise(((resolve, reject) => {
   });
 }));
 
-const deleteMessage = async (messageId) => {
+const deleteMessage = async (messageId, localUser) => {
   try {
-    await showMessage(messageId);
+    const message = await showMessage(messageId)
+    if(message.user_id !== localUser.id){
+      throw "Erreur"
+    }
   } catch (err) {
     throw new Error('message not found');
   }

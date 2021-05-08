@@ -53,7 +53,7 @@ exports.update = async (req, res) => {
   const { messageId } = req.params;
   const { body } = req;
   try {
-    return res.status(200).json(await updateMessage(messageId, body));
+    return res.status(200).json(await updateMessage(messageId, body, req.user));
   } catch (err) {
     return res.status(404).json({
       error: 404,
@@ -66,7 +66,7 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   const { messageId } = req.params;
   try {
-    return res.status(204).json(await deleteMessage(messageId));
+    return res.status(204).json(await deleteMessage(messageId, req.user));
   } catch (err) {
     return res.status(404).json({
       error: 404,
