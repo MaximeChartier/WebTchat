@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { PrimaryButton } from './components/Button.jsx'
-import { useJsonFetchOrFlash } from './functions/hooks'
-import AddChannel from './components/AddChannel';
+import { PrimaryButton } from '../components/Button.jsx'
+import { useJsonFetchOrFlash } from '../functions/hooks'
+import AddChannel from './AddChannel';
 
 export default function Channels ({ setSelectedChannel }) {
 

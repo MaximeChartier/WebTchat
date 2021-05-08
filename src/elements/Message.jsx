@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useToggle } from './functions/hooks';
-import { Modal } from './components/Modal'
-import { FetchForm, FormField, FormPrimaryButton } from './components/Form'
+import { useToggle } from '../functions/hooks';
+import { Modal } from '../components/Modal'
+import { FetchForm, FormField, FormPrimaryButton } from '../components/Form'
 
 export default function Message ({ message, localUser }) {
 

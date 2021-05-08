@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
-import Channels from './Channels';
-import Channel from './Channel';
+import Channels from './elements/Channels';
+import Channel from './elements/Channel';
 
 export default function Main () {
   const [selectedChannel, setSelectedChannel] = useState({

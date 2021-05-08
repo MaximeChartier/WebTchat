@@ -1,8 +1,8 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { useJsonFetchOrFlash, useToggle, useClickOutside } from '../functions/hooks';
-import { SecondaryButton } from './Button.jsx'
-import { FetchForm, FormField, FormPrimaryButton } from './Form.jsx'
-import { Modal } from './Modal.jsx'
+import React, { useRef} from 'react';
+import { useToggle, useClickOutside } from '../functions/hooks';
+import { SecondaryButton } from '../components/Button.jsx'
+import { FetchForm, FormField, FormPrimaryButton } from '../components/Form.jsx'
+import { Modal } from '../components/Modal.jsx'
 
 export default function AddChannel ({handleSuccess}) {
     

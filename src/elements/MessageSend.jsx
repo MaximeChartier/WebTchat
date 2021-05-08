@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { FetchForm, FormField, FormPrimaryButton } from './components/Form.jsx'
+import { FetchForm, FormField, FormPrimaryButton } from '../components/Form.jsx'
 
 export default function  MessageSend ({ channel, addMessage }){
 

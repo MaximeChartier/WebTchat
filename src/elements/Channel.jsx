@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Messages from './Messages';
 import MessageSend from './MessageSend';
-import { useJsonFetchOrFlash } from './functions/hooks'
+import { useJsonFetchOrFlash } from '../functions/hooks'
 
 export default function Channel ({channel}) {
 
