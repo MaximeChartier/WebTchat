@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000/api/v1/';
+const API_URL = '/api/v1/';
 
 export const HTTP_UNPROCESSABLE_ENTITY = 422;
 export const HTTP_NOT_FOUND = 404;
