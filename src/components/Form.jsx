@@ -1,11 +1,12 @@
-import React, { createContext } from 'react'
-import { ApiError, jsonFetch } from '../functions/api.js'
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useAutofocus } from '../functions/hooks.js'
-import { Button, PrimaryButton, SecondaryButton } from './Button.jsx'
-import { Flex } from './Layout.jsx'
-import { classNames } from '../functions/dom.js'
-import { useMemo } from 'react'
+import React, {
+  createContext, useContext, useEffect, useLayoutEffect, useRef, useState, useMemo,
+} from 'react';
+import { ApiError, jsonFetch } from '../functions/api.js';
+
+import { useAutofocus } from '../functions/hooks.js';
+import { Button, PrimaryButton, SecondaryButton } from './Button.jsx';
+import { Flex } from './Layout.jsx';
+import { classNames } from '../functions/dom.js';
 
 /**
  * Représente un champs, dans le contexte du formulaire
@@ -22,7 +23,7 @@ import { useMemo } from 'react'
  * @param {string} wrapperClass
  * @param props
  */
-export function Field ({
+export function Field({
   name,
   onInput,
   value,
@@ -35,23 +36,23 @@ export function Field ({
   ...props
 }) {
   // Hooks
-  const [dirty, setDirty] = useState(false)
-  const ref = useRef(null)
-  useAutofocus(ref, props.autofocus)
-  const showError = error && !dirty
+  const [dirty, setDirty] = useState(false);
+  const ref = useRef(null);
+  useAutofocus(ref, props.autofocus);
+  const showError = error && !dirty;
 
-  function handleInput (e) {
+  function handleInput(e) {
     if (dirty === false) {
-      setDirty(true)
+      setDirty(true);
     }
     if (onInput) {
-      onInput(e)
+      onInput(e);
     }
   }
 
   // Si le champs a une erreur et n'a pas été modifié
   if (showError) {
-    className += ' is-invalid'
+    className += ' is-invalid';
   }
 
   // Les attributs à passer aux champs
@@ -62,96 +63,96 @@ export function Field ({
     onInput: handleInput,
     type,
     ...(value === undefined ? {} : { value }),
-    ...props
-  }
+    ...props,
+  };
 
   // On trouve le composant à utiliser
   const FieldComponent = useMemo(() => {
     if (component) {
-      return component
+      return component;
     }
     switch (type) {
       case 'textarea':
-        return FieldTextarea
+        return FieldTextarea;
       case 'editor':
-        return FieldEditor
+        return FieldEditor;
       case 'checkbox':
-        return FieldCheckbox
+        return FieldCheckbox;
       default:
-        return FieldInput
+        return FieldInput;
     }
-  }, [component, type])
+  }, [component, type]);
 
   // Si l'erreur change on considère le champs comme "clean"
   useLayoutEffect(() => {
-    setDirty(false)
-  }, [error])
+    setDirty(false);
+  }, [error]);
 
   if (FieldComponent === FieldCheckbox) {
     return (
       <div className={`form-check ${wrapperClass}`} ref={ref}>
         <FieldComponent {...attr} />
         {children && (
-          <label htmlFor={name} class='form-check-label'>
+          <label htmlFor={name} className="form-check-label">
             {children}
           </label>
         )}
-        {showError && <div className='invalid-feedback'>{error}</div>}
+        {showError && <div className="invalid-feedback">{error}</div>}
       </div>
-    )
+    );
   }
 
   return (
     <div className={`form-group ${wrapperClass}`} ref={ref}>
       {children && <label htmlFor={name}>{children}</label>}
       <FieldComponent {...attr} />
-      {showError && <div className='invalid-feedback'>{error}</div>}
+      {showError && <div className="invalid-feedback">{error}</div>}
     </div>
-  )
+  );
 }
 
 /**
  * Bouton radio avec un label sur le côté
  */
-export function Radio ({ children, ...props }) {
+export function Radio({ children, ...props }) {
   return (
     <Flex center gap={1}>
-      <span class={classNames('form-radio', props.checked && 'is-checked')}>
-        <input type='radio' {...props} />
+      <span className={classNames('form-radio', props.checked && 'is-checked')}>
+        <input type="radio" {...props} />
       </span>
-      <label htmlFor={props.id} class='flex'>
+      <label htmlFor={props.id} className="flex">
         {children}
       </label>
     </Flex>
-  )
+  );
 }
 
 /**
  * Bouton checkbox avec un label sur le côté
  */
-export function Checkbox ({ children, ...props }) {
+export function Checkbox({ children, ...props }) {
   return (
     <Flex center gap={1}>
-      <span class={classNames('form-checkbox', props.checked && 'is-checked')}>
-        <input type='checkbox' {...props} />
+      <span className={classNames('form-checkbox', props.checked && 'is-checked')}>
+        <input type="checkbox" {...props} />
       </span>
-      <label htmlFor={props.id} class='flex'>
+      <label htmlFor={props.id} className="flex">
         {children}
       </label>
     </Flex>
-  )
+  );
 }
 
-function FieldTextarea (props) {
-  return <textarea {...props} />
+function FieldTextarea(props) {
+  return <textarea {...props} />;
 }
 
-function FieldInput (props) {
-  return <input {...props} />
+function FieldInput(props) {
+  return <input {...props} />;
 }
 
-function FieldCheckbox (props) {
-  return <input {...props} />
+function FieldCheckbox(props) {
+  return <input {...props} />;
 }
 
 /**
@@ -161,8 +162,8 @@ function FieldCheckbox (props) {
 export const FormContext = createContext({
   errors: {},
   loading: false,
-  emptyError: () => {}
-})
+  emptyError: () => {},
+});
 
 /**
  * Formulaire Ajax
@@ -177,79 +178,79 @@ export const FormContext = createContext({
  * @param {bool} floatingAlert
  * @param onSuccess Fonction appelée en cas de retour valide de l'API (reçoit les données de l'API en paramètre)
  */
-export function FetchForm ({
+export function FetchForm({
   data = {},
   children,
   action,
   className,
   method = 'POST',
   onSuccess = () => {},
-  floatingAlert = false
+  floatingAlert = false,
 }) {
   const [{ loading, errors }, setState] = useState({
     loading: false,
-    errors: []
-  })
-  const mainError = errors.main || null
+    errors: [],
+  });
+  const mainError = errors.main || null;
 
   // Vide l'erreur associée à un champs donnée
-  const emptyError = name => {
-    if (!errors[name]) return null
-    const newErrors = { ...errors }
-    delete newErrors[name]
-    setState(s => ({ ...s, errors: newErrors }))
-  }
+  const emptyError = (name) => {
+    if (!errors[name]) return null;
+    const newErrors = { ...errors };
+    delete newErrors[name];
+    setState((s) => ({ ...s, errors: newErrors }));
+  };
 
   // On soumet le formulaire au travers d'une requête Ajax
-  const handleSubmit = async e => {
-    e.preventDefault()
-    setState({ loading: true, errors: [] })
-    const form = e.target
-    const formData = { ...data, ...Object.fromEntries(new FormData(form)) }
-    const formD = new FormData(form)
-    const keys = []
-    formD.forEach((v,k) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setState({ loading: true, errors: [] });
+    const form = e.target;
+    const formData = { ...data, ...Object.fromEntries(new FormData(form)) };
+    const formD = new FormData(form);
+    const keys = [];
+    formD.forEach((v, k) => {
       keys.push({
-        key : k,
-        value: v
-      })
-    })
-    const result = keys.reduce(function (r, a) {
-      if(r[a.key]){
-        const old = r[a.key]
-        if(old instanceof Array){
-          r[a.key].push(a.value)
+        key: k,
+        value: v,
+      });
+    });
+    const result = keys.reduce((r, a) => {
+      if (r[a.key]) {
+        const old = r[a.key];
+        if (old instanceof Array) {
+          r[a.key].push(a.value);
         } else {
-          r[a.key] = [r[a.key], a.value]
+          r[a.key] = [r[a.key], a.value];
         }
       } else {
-        r[a.key] = a.value
+        r[a.key] = a.value;
       }
-        return r;
-    }, Object.create(null))
+      return r;
+    }, Object.create(null));
 
     try {
-      const response = await jsonFetch(action, { method, body: result })
-      onSuccess(response)
-      form.reset()
+      const response = await jsonFetch(action, { method, body: result });
+      onSuccess(response);
+      form.reset();
     } catch (e) {
       if (e instanceof ApiError) {
-        setState(s => ({ ...s, errors: e.violations }))
+        setState((s) => ({ ...s, errors: e.violations }));
       } else if (e.detail) {
-        //flash(e.detail, 'danger', null)
+        // flash(e.detail, 'danger', null)
       } else {
-        throw e
+        throw e;
       }
     }
-    setState(s => ({ ...s, loading: false }))
-  }
+    setState((s) => ({ ...s, loading: false }));
+  };
 
   return (
     <FormContext.Provider value={{ loading, errors, emptyError }}>
       <form onSubmit={handleSubmit} className={className}>
         {mainError && (
           <alert-message
-            type='danger'
+            type="danger"
             onClose={() => emptyError('main')}
             className={floatingAlert ? 'is-floating' : 'full'}
           >
@@ -259,7 +260,7 @@ export function FetchForm ({
         {children}
       </form>
     </FormContext.Provider>
-  )
+  );
 }
 
 /**
@@ -270,14 +271,16 @@ export function FetchForm ({
  * @param {React.Children} children
  * @param {object} props
  */
-export function FormField ({ type = 'text', name, children, ...props }) {
-  const { errors, emptyError, loading } = useContext(FormContext)
-  const error = errors[name] || null
+export function FormField({
+  type = 'text', name, children, ...props
+}) {
+  const { errors, emptyError, loading } = useContext(FormContext);
+  const error = errors[name] || null;
   return (
     <Field type={type} name={name} error={error} onInput={() => emptyError(name)} readOnly={loading} {...props}>
       {children}
     </Field>
-  )
+  );
 }
 
 /**
@@ -288,15 +291,15 @@ export function FormField ({ type = 'text', name, children, ...props }) {
  * @return {*}
  * @constructor
  */
-export function FormPrimaryButton ({ children, ...props }) {
-  const { loading, errors } = useContext(FormContext)
-  const disabled = loading || Object.keys(errors).filter(k => k !== 'main').length > 0
+export function FormPrimaryButton({ children, ...props }) {
+  const { loading, errors } = useContext(FormContext);
+  const disabled = loading || Object.keys(errors).filter((k) => k !== 'main').length > 0;
 
   return (
     <PrimaryButton loading={loading} disabled={disabled} {...props}>
       {children}
     </PrimaryButton>
-  )
+  );
 }
 
 /**
@@ -307,15 +310,15 @@ export function FormPrimaryButton ({ children, ...props }) {
  * @return {*}
  * @constructor
  */
-export function FormSecondaryButton ({ children, ...props }) {
-  const { loading, errors } = useContext(FormContext)
-  const disabled = loading || Object.keys(errors).filter(k => k !== 'main').length > 0
+export function FormSecondaryButton({ children, ...props }) {
+  const { loading, errors } = useContext(FormContext);
+  const disabled = loading || Object.keys(errors).filter((k) => k !== 'main').length > 0;
 
   return (
     <SecondaryButton loading={loading} disabled={disabled} {...props}>
       {children}
     </SecondaryButton>
-  )
+  );
 }
 
 /**
@@ -326,13 +329,13 @@ export function FormSecondaryButton ({ children, ...props }) {
  * @return {*}
  * @constructor
  */
-export function FormButton ({ children, ...props }) {
-  const { loading, errors } = useContext(FormContext)
-  const disabled = loading || Object.keys(errors).filter(k => k !== 'main').length > 0
+export function FormButton({ children, ...props }) {
+  const { loading, errors } = useContext(FormContext);
+  const disabled = loading || Object.keys(errors).filter((k) => k !== 'main').length > 0;
 
   return (
     <Button loading={loading} disabled={disabled} {...props}>
       {children}
     </Button>
-  )
+  );
 }

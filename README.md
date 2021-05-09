@@ -19,10 +19,10 @@ yarn dev
 - [ ] Automatiser l’association de leur email avec leur gravatar, sélectionner un avatar proposé par l’application et uploader son propre gravatar.
 - [x] Système de préférence de compte.
 - [x] Bénéficier d’une application sécurisée dans laquelle l’accès aux ressources est vérifié (authentification et autorisation).
-- [ ] Respect des conventions de nommage / poinnts : 2
+- [x] Respect des conventions de nommage / poinnts : 2
 - [x] Structure des projets simple, compréhensible et stable, organisation des dossiers, services, composants 4
-- [ ] Qualité globale du code (indentation, clarté, …) 4
-- [ ] Apparence globale de l’application web 4
+- [x] Qualité globale du code (indentation, clarté, …) 4
+- [x] Apparence globale de l’application web 4
 - [x] Sign In, Sign Up, Log Out / points: 4   
 - [x] Welcome screens / points: 4   
 - [x] New channel creation  / points: 6   
