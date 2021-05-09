@@ -30,7 +30,7 @@ routerApiV1.use('/messages', auth, messagesRoutes);
 app.use('/api/v1', routerApiV1);
 
 // Gestion des 404
-app.get('*', (req, res) => res.status(404).json({ message: 'Page not found' }));
+app.get('*', (req, res) => res.sendfile('dist/index.html'));
 
 const port = process.env.PORT || 8000;
 
