@@ -10,7 +10,6 @@
     "body-parser": "1.19.0",
     "concurrently": "^6.0.2",
     "cors": "^2.8.5",
-    "eslint-plugin-react": "^7.23.2",
     "express": "4.17.1",
     "htm": "^3.0.4",
     "jsonwebtoken": "^8.5.1",
@@ -26,9 +25,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react-refresh": "^1.3.1",
-    "eslint": "^7.20.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "nodemon": "^2.0.7",
     "vite": "^2.1.5"
   },
@@ -39,7 +42,7 @@
     "test": "react-scripts test",
     "test_server": "NODE_ENV=testing mocha 'test/**/*.js'",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
+    "lint": "eslint \"./**/*.{js,css,jsx}\"",
     "dev": "concurrently -n 'client,server' \"yarn client\" \"yarn server\""
   },
   "eslintConfig": {
