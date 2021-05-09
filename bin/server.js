@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Routes
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 const routerApiV1 = express.Router();
 

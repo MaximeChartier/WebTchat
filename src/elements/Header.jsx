@@ -55,7 +55,9 @@ export default function Header({ logged }) {
         )
         : (
           <div className="flex">
-            <div />
+            <div>
+              <h3 className='h3 ml2'>Maxlou</h3>
+            </div>
             <div className="flex">
               <div className="mr1">
                 <SignUp signupSuccess={loginSuccess} />
