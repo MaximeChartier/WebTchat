@@ -44,7 +44,7 @@
     "test_server": "NODE_ENV=testing mocha 'test/**/*.js'",
     "eject": "react-scripts eject",
     "lint": "eslint \"./**/*.{js,css,jsx}\"",
-    "dev": "concurrently -n 'client,server' \"yarn client\" \"yarn server\""
+    "dev": "concurrently -n 'client,server' \"npm run client\" \"npm run server\""
   },
   "eslintConfig": {
     "extends": "react-app"
