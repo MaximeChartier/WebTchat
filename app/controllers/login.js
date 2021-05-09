@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const SECRET = 'mykey';
 const jwt = require('jsonwebtoken');
 const {
@@ -14,8 +17,10 @@ exports.login = async (req, res) => {
 
   let user;
   users.forEach((u) => {
-    if (u.email === req.body.email && u.password === req.body.password) {
-      user = u;
+    if (u.email === req.body.email) {
+      if(bcrypt.compareSync(req.body.password, u.password)){
+        user = u;
+      }
     }
   });
 

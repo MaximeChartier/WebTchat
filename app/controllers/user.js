@@ -65,7 +65,9 @@ exports.update = async (req, res) => {
   const { userId } = req.params;
   const { body } = req;
   try {
-    return res.status(200).json(await updateUser(userId, body));
+    const user = await updateUser(userId, body)
+    user.password = null
+    return res.status(200).json(user);
   } catch (err) {
     return res.status(404).json({
       error: 404,

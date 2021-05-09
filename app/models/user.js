@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const { v4: uuid } = require('uuid');
 const db = require('../config/db_config');
 
@@ -54,23 +57,21 @@ const createNewUser = (body) => {
     gravatarId: body.gravatarId,
     name: body.name,
     email: body.email,
-    password: body.password,
+    password: '',
     darkTheme: false,
   };
 
   return new Promise(((resolve, reject) => {
-    // https://github.com/Level/level#put
-    // on insère en base de données
-    db.put(`users:${user.id}`, JSON.stringify(user), (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        /**
-         * On a "jsonifié" notre channel lorsque on l'a créé ligne 24.
-         * Il faut faire l'opération inverse
-         */
-        resolve(user);
-      }
+
+    bcrypt.hash(body.password, saltRounds, function(err, hash) {
+      user.password = hash
+      db.put(`users:${user.id}`, JSON.stringify(user), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(user);
+        }
+      });
     });
   }));
 };
