@@ -16,7 +16,6 @@ yarn dev
 - [x] Accéder aux channels auxquels il a été ajouté.
 - [x] Envoyer un nouveau message.
 - [x] Modifier et supprimer son message.
-- [ ] Automatiser l’association de leur email avec leur gravatar, sélectionner un avatar proposé par l’application et uploader son propre gravatar.
 - [x] Système de préférence de compte.
 - [x] Bénéficier d’une application sécurisée dans laquelle l’accès aux ressources est vérifié (authentification et autorisation).
 - [x] Respect des conventions de nommage / poinnts : 2
@@ -32,8 +31,8 @@ yarn dev
 - [x] Message modification / points: 2
 - [x] Message removal / points: 2
 - [x] Account settings  / points: 4
-- [ ] Gravatar integration  / points: 2
-- [ ] Avatar selection / points: 4
+- [x] Gravatar integration  / points: 2
+- [x] Avatar selection / points: 4
 - [ ] Personal custom avatar / points: 6   
 
 ## Bonus
