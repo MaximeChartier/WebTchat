@@ -206,8 +206,30 @@ export function FetchForm ({
     setState({ loading: true, errors: [] })
     const form = e.target
     const formData = { ...data, ...Object.fromEntries(new FormData(form)) }
+    const formD = new FormData(form)
+    const keys = []
+    formD.forEach((v,k) => {
+      keys.push({
+        key : k,
+        value: v
+      })
+    })
+    const result = keys.reduce(function (r, a) {
+      if(r[a.key]){
+        const old = r[a.key]
+        if(old instanceof Array){
+          r[a.key].push(a.value)
+        } else {
+          r[a.key] = [r[a.key], a.value]
+        }
+      } else {
+        r[a.key] = a.value
+      }
+        return r;
+    }, Object.create(null))
+
     try {
-      const response = await jsonFetch(action, { method, body: formData })
+      const response = await jsonFetch(action, { method, body: result })
       onSuccess(response)
       form.reset()
     } catch (e) {

@@ -31,7 +31,7 @@ export default function AccoutSettings ({userUpdated}) {
     return (
         <>
             <SecondaryButton size='small' className="btn btn-secondary btn-small center w100" onClick={toggleModal}>
-                Paramètre
+                Paramètres
             </SecondaryButton>
             {modal &&
                 <Modal>

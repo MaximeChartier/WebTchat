@@ -1,5 +1,6 @@
 const { v4: uuid } = require('uuid');
 const db = require('../config/db_config');
+const { showUser } = require('./user');
 
 const listAllChannels = async () => new Promise((resolve, reject) => {
   const channels = [];
@@ -18,11 +19,18 @@ const listAllChannels = async () => new Promise((resolve, reject) => {
       reject(err);
     })
     .on('end', () => {
-      resolve(channels);
+      Promise.all(channels.map(async (c) => {
+        c.members = await Promise.all(c.members.map(async (u) => {
+          const user = await showUser(u);
+          return { name: user.name, id: u };
+        }));
+      })).then(() => {
+        resolve(channels);
+      });
     });
 });
 
-const createNewChannel = (body) => {
+const createNewChannel = (body, loggedUser) => {
   if (!body.name) {
     return null; // ne pas oublier les blindages !
   }
@@ -31,6 +39,8 @@ const createNewChannel = (body) => {
   const channel = {
     id: uuid(),
     name: body.name,
+    owner: loggedUser.id,
+    members: [loggedUser.id],
   };
 
   return new Promise(((resolve, reject) => {
@@ -62,6 +72,7 @@ const updateChannel = (channelId, body) => new Promise(((resolve, reject) => {
       ...channel,
       ...{
         name: (body.name ? body.name : channel.name),
+        members: (body.members ? body.members : channel.members),
       },
     };
     db.put(`channels:${channelId}`, JSON.stringify(newChannel), (err) => {

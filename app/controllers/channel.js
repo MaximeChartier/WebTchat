@@ -13,14 +13,13 @@ const {
 
 exports.index = async (req, res) => {
   const channels = await listAllChannels();
-
-  return res.status(200).json(channels);
+  return res.status(200).json(channels.filter((c) => c.members.map((m) => m.id).indexOf(req.user.id) > -1));
 };
 
 exports.create = async (req, res) => {
   const { body } = req; // on destructure req pour récuperer le body
 
-  const channel = await createNewChannel(body);
+  const channel = await createNewChannel(body, req.user);
 
   if (!channel) {
     return res.status(400).json({
@@ -35,7 +34,11 @@ exports.show = async (req, res) => {
   const { channelId } = req.params;
 
   try {
-    return res.status(200).json(await showChannel(channelId));
+    const channel = await showChannel(channelId);
+    if (channel.members.map((m) => m.id).indexOf(req.user.id) > -1) {
+      return res.status(200).json(channel);
+    }
+    return res.status(404).json();
   } catch (err) {
     return res.status(404).json({
       error: 404,
@@ -49,6 +52,9 @@ exports.showMessages = async (req, res) => {
   const { channelId } = req.params;
   try {
     const channel = await showChannel(channelId);
+    if (channel.members.indexOf(req.user.id) === -1) {
+      throw '';
+    }
     const messages = await showChannelMessages(channel.id);
     const hidratedMessages = [];
     await Promise.all(messages.map(async (m) => {

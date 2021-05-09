@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Messages from './Messages';
 import MessageSend from './MessageSend';
 import { useJsonFetchOrFlash } from '../functions/hooks'
+import { FetchForm, FormPrimaryButton } from '../components/Form.jsx'
+import Select from 'react-select'
 
-export default function Channel ({channel}) {
+export default function Channel ({users, channel}) {
 
   const [user, setUser] = useState({})
 
@@ -34,7 +36,7 @@ export default function Channel ({channel}) {
     newMessage.gravatarId = localUser.gravatarId
     setMessages([...messages, newMessage])
   }
-
+  
   return (
     <>
       {!done ? 
@@ -45,6 +47,25 @@ export default function Channel ({channel}) {
           <div className='flex'>
             <h1 className="ml3 h3 center py1">{channel.name}</h1>
             <div>URL du fil : <a className="bold">{window.location.origin}/{channel.name}</a></div>
+          </div>
+          <div className="mx4">
+            <div className="py1">
+              Liste des membres
+            </div> 
+            <FetchForm action={`channels/${channel.id}`} method='PUT' className="flex">
+              <div className="w100 mr2">
+                  <Select 
+                    key={channel.id}
+                    name='members' 
+                    defaultValue={channel.members.map(m => {return { value: m.id, label: m.name }})} 
+                    options={users.map(m => {return { value: m.id, label: m.name }})}
+                    isMulti
+                    id='test'></Select>
+              </div>
+              <div>
+                <FormPrimaryButton>Enregister</FormPrimaryButton>         
+              </div>
+            </FetchForm>
           </div>
           <Messages localUser={user} messages={messages}></Messages>
           <div>

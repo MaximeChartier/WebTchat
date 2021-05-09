@@ -21,14 +21,14 @@ yarn dev
 - [x] Bénéficier d’une application sécurisée dans laquelle l’accès aux ressources est vérifié (authentification et autorisation).
 - [ ] Respect des conventions de nommage / poinnts : 2
 - [x] Structure des projets simple, compréhensible et stable, organisation des dossiers, services, composants 4
-- [?] Qualité globale du code (indentation, clarté, …) 4
-- [?] Apparence globale de l’application web 4
+- [ ] Qualité globale du code (indentation, clarté, …) 4
+- [ ] Apparence globale de l’application web 4
 - [x] Sign In, Sign Up, Log Out / points: 4   
 - [x] Welcome screens / points: 4   
 - [x] New channel creation  / points: 6   
-- [ ] Channel membership and access / points: 4
-- [ ] Ressource access control / points: 4
-- [ ] Invite users to channels / points: 6
+- [x] Channel membership and access / points: 4
+- [x] Ressource access control / points: 4
+- [x] Invite users to channels / points: 6
 - [x] Message modification / points: 2
 - [x] Message removal / points: 2
 - [x] Account settings  / points: 4

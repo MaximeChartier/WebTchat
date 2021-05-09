@@ -10,6 +10,7 @@
     "body-parser": "1.19.0",
     "concurrently": "^6.0.2",
     "cors": "^2.8.5",
+    "eslint-plugin-react": "^7.23.2",
     "express": "4.17.1",
     "htm": "^3.0.4",
     "jsonwebtoken": "^8.5.1",
@@ -19,6 +20,7 @@
     "react-dom": "17.0.1",
     "react-nl2br": "1.0.2",
     "react-scripts": "3.4.3",
+    "react-select": "^4.3.0",
     "sass": "^1.32.12",
     "uuid": "8.3.2"
   },
@@ -32,7 +34,7 @@
   },
   "scripts": {
     "client": "vite",
-    "server": "nodemon ./bin/server.js",
+    "server": "nodemon --watch app ./bin/server.js",
     "build": "vite build",
     "test": "react-scripts test",
     "test_server": "NODE_ENV=testing mocha 'test/**/*.js'",
